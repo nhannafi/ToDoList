@@ -29,6 +29,21 @@ export default class Fire {
             }
         })
     }
+    addList(List) {
+        let ref = this.ref;
+        ref.add(list);
+    }
+    deleteList(list){
+        let ref = this.ref;
+        ref.doc(list.id).delete();
+    }
+
+    updateList(list){
+        let ref = this.ref;
+        ref.doc(list.id).update(list);
+    }
     
-    
+    detach(){
+        this.unsubscribe();
+    }
 }
