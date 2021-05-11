@@ -46,4 +46,21 @@ export default class Fire {
     detach(){
         this.unsubscribe();
     }
+
+    get ref(){
+        return firebase.firestore().collection("lists");
+    }
+
+    getLists(callback){
+        let ref = this.ref.orderBy("name");
+        this.unsubscribe = ref.onSnapshot(snapshot => {
+            let lists =[];
+            snapshot.forEach(doc => {
+                lists.push({ id: doc.id, ...doc.data() });
+            });
+            callback(lists);
+        }, function(error){
+            console.log(error);
+        });
+    }
 }
